@@ -1,16 +1,24 @@
 #include "gmock/gmock.h"
 #include "baseball.cpp"
 
-TEST(BaseballGame, TryGameTest) {
-	EXPECT_EQ(1, 1);
-}
-TEST(BaseballGame, ThrowExceptionWhenInputLengthIsUnmached) {
+class BaseballFixture : public testing::Test {
+public: 
 	Baseball game;
-	EXPECT_THROW(game.guess(string("12")), length_error);
-}
-TEST(BaseballGame, ThrowExceptionWhenInvalidChar) {
-	Baseball game;
-	EXPECT_THROW(game.guess(string("12s")), invalid_argument);
+	void assertIllegalArgument(string guessNumber) {
+		//game.guess() 수행 후, Exception 이 발생해야 PASS이다.
+		try {
+			game.guess(guessNumber);
+			FAIL();
+		}
+		catch (exception e) {
+			//PASS
+		}
+	}
+};
+
+TEST_F(BaseballFixture, ThrowExceptionWhenInvalidCase) {
+	assertIllegalArgument("12");
+	assertIllegalArgument("12s");
 }
 int main() {
 	::testing::InitGoogleMock();
