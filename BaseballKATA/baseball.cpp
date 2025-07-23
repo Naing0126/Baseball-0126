@@ -19,15 +19,7 @@ public:
 			return { true, 3, 0 };
 		}
 
-		int ballCnt = 0;
-		for (int i = 0; i < guessNumber.length(); i++) {
-			if ((question.find(guessNumber[i]) != std::string::npos)
-				&& (guessNumber[i] != question[i])) {
-				ballCnt++;
-			}
-		}
-
-		return { false, getStrikeCnt(guessNumber), ballCnt };
+		return { false, getStrikeCnt(guessNumber), getBallCnt(guessNumber)};
 	}
 
 	int getStrikeCnt(const std::string& guessNumber)
@@ -37,6 +29,18 @@ public:
 			if (guessNumber[i] == question[i]) strikeCnt++;
 		}
 		return strikeCnt;
+	}
+
+	int getBallCnt(const std::string& guessNumber)
+	{
+		int ballCnt = 0;
+		for (int i = 0; i < guessNumber.length(); i++) {
+			if ((question.find(guessNumber[i]) != std::string::npos)
+				&& (guessNumber[i] != question[i])) {
+				ballCnt++;
+			}
+		}
+		return ballCnt;
 	}
 
 	void assertIllegalArgument(const std::string& guessNumber)
