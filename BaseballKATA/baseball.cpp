@@ -19,7 +19,15 @@ public:
 			return { true, 3, 0 };
 		}
 
-		return { false, getStrikeCnt(guessNumber), 0 };
+		int ballCnt = 0;
+		for (int i = 0; i < guessNumber.length(); i++) {
+			if ((question.find(guessNumber[i]) != std::string::npos)
+				&& (guessNumber[i] != question[i])) {
+				ballCnt++;
+			}
+		}
+
+		return { false, getStrikeCnt(guessNumber), ballCnt };
 	}
 
 	int getStrikeCnt(const std::string& guessNumber)
