@@ -10,13 +10,17 @@ struct GuessResult {
 
 class Baseball {
 public:
-	Baseball(const string& question)
+	explicit Baseball(const string& question)
 		: question(question) {
 	}
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
-		return { true, 3, 0 };
+		if (guessNumber == question) {
+			return { true, 3, 0 };
+		}
+		return { false, 0, 0 };
 	}
+
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
 		if (guessNumber.length() != 3) {

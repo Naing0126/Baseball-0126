@@ -5,7 +5,6 @@ class BaseballFixture : public testing::Test {
 public: 
 	Baseball game{ "123" };
 	void assertIllegalArgument(string guessNumber) {
-		//game.guess() 수행 후, Exception 이 발생해야 PASS이다.
 		try {
 			game.guess(guessNumber);
 			FAIL();
