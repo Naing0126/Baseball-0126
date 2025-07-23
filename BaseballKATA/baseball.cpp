@@ -19,11 +19,16 @@ public:
 			return { true, 3, 0 };
 		}
 
+		return { false, getStrikeCnt(guessNumber), 0 };
+	}
+
+	int getStrikeCnt(const std::string& guessNumber)
+	{
 		int strikeCnt = 0;
-		for (int i = 0; i < guessNumber.length();i++) {
+		for (int i = 0; i < guessNumber.length(); i++) {
 			if (guessNumber[i] == question[i]) strikeCnt++;
 		}
-		return { false, strikeCnt, 0 };
+		return strikeCnt;
 	}
 
 	void assertIllegalArgument(const std::string& guessNumber)
