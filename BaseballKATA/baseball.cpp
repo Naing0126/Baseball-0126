@@ -7,7 +7,6 @@ struct GuessResult {
 	int balls;
 };
 
-
 class Baseball {
 public:
 	explicit Baseball(const string& question)
@@ -16,36 +15,16 @@ public:
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
 		if (guessNumber == question) {
-			return { true, 3, 0 };
+			return { true, QUESTION_CHAR_CNT, 0 };
 		}
 
 		return { false, getStrikeCnt(guessNumber), getBallCnt(guessNumber)};
 	}
 
-	int getStrikeCnt(const std::string& guessNumber)
-	{
-		int strikeCnt = 0;
-		for (int i = 0; i < guessNumber.length(); i++) {
-			if (guessNumber[i] == question[i]) strikeCnt++;
-		}
-		return strikeCnt;
-	}
-
-	int getBallCnt(const std::string& guessNumber)
-	{
-		int ballCnt = 0;
-		for (int i = 0; i < guessNumber.length(); i++) {
-			if ((question.find(guessNumber[i]) != std::string::npos)
-				&& (guessNumber[i] != question[i])) {
-				ballCnt++;
-			}
-		}
-		return ballCnt;
-	}
-
+private:
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
-		if (guessNumber.length() != 3) {
+		if (guessNumber.length() != QUESTION_CHAR_CNT) {
 			throw length_error("Must be three letters.");
 		}
 
@@ -65,6 +44,25 @@ public:
 			|| guessNumber[0] == guessNumber[2]);
 		return isDuplicated;
 	}
-private:
+	int getStrikeCnt(const std::string& guessNumber)
+	{
+		int strikeCnt = 0;
+		for (int i = 0; i < guessNumber.length(); i++) {
+			if (guessNumber[i] == question[i]) strikeCnt++;
+		}
+		return strikeCnt;
+	}
+	int getBallCnt(const std::string& guessNumber)
+	{
+		int ballCnt = 0;
+		for (int i = 0; i < guessNumber.length(); i++) {
+			if ((question.find(guessNumber[i]) != std::string::npos)
+				&& (guessNumber[i] != question[i])) {
+				ballCnt++;
+			}
+		}
+		return ballCnt;
+	}
 	string question;
+	const int QUESTION_CHAR_CNT = 3;
 };
